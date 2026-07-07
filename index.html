@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quality Deliverables</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Quality</p>
+          <h1>Controle de entregáveis</h1>
+        </div>
+        <div class="header-actions">
+          <span class="sync-status" id="syncStatus">Desconectado</span>
+          <span class="user-email" id="userEmail" hidden></span>
+          <button class="button button-ghost" id="exportButton" type="button">Exportar</button>
+          <button class="button button-ghost" id="resetButton" type="button">Restaurar base</button>
+          <button class="button button-ghost" id="signOutButton" type="button" hidden>Sair</button>
+          <button class="button button-primary" id="newDeliverableButton" type="button">Novo entregável</button>
+        </div>
+      </header>
+
+      <section class="auth-panel" id="authPanel">
+        <div>
+          <p class="eyebrow">Online</p>
+          <h2>Entrar no controle</h2>
+          <p>Use uma conta do app para salvar seus entregaveis no Supabase. Esta conta nao e a mesma conta do GitHub ou do painel Supabase.</p>
+        </div>
+        <form class="auth-form" id="authForm">
+          <label class="field">
+            <span>E-mail</span>
+            <input id="authEmail" name="email" type="email" autocomplete="email" required />
+          </label>
+          <label class="field">
+            <span>Senha</span>
+            <div class="password-control">
+              <input id="authPassword" name="password" type="password" autocomplete="current-password" minlength="6" required />
+              <button class="password-toggle" id="togglePasswordButton" type="button" aria-label="Mostrar senha">Mostrar</button>
+            </div>
+          </label>
+          <div class="auth-actions">
+            <button class="button button-github" id="githubSignInButton" type="button">Entrar com GitHub</button>
+            <button class="button button-primary" id="signInButton" type="submit">Entrar</button>
+            <button class="button button-ghost" id="signUpButton" type="button">Criar conta</button>
+          </div>
+          <p class="form-message" id="authMessage"></p>
+        </form>
+      </section>
+
+      <div id="appContent" hidden>
+      <section class="summary-grid" aria-label="Resumo dos entregáveis">
+        <article class="metric">
+          <span class="metric-label">Total</span>
+          <strong id="totalCount">0</strong>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Concluídos</span>
+          <strong id="doneCount">0</strong>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Em andamento</span>
+          <strong id="progressCount">0</strong>
+        </article>
+        <article class="metric">
+          <span class="metric-label">Bloqueados</span>
+          <strong id="blockedCount">0</strong>
+        </article>
+        <article class="metric metric-wide">
+          <div class="metric-row">
+            <span class="metric-label">Avanço geral</span>
+            <strong id="completionRate">0%</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <span id="completionBar"></span>
+          </div>
+        </article>
+      </section>
+
+      <section class="toolbar" aria-label="Filtros">
+        <label class="search-field">
+          <span>Buscar</span>
+          <input id="searchInput" type="search" placeholder="Nome, pacote, responsável..." />
+        </label>
+        <div class="segmented" id="statusFilters" role="group" aria-label="Status">
+          <button class="segment active" type="button" data-status="all">Todos</button>
+          <button class="segment" type="button" data-status="not-started">Não iniciado</button>
+          <button class="segment" type="button" data-status="in-progress">Em andamento</button>
+          <button class="segment" type="button" data-status="done">Concluído</button>
+          <button class="segment" type="button" data-status="blocked">Bloqueado</button>
+        </div>
+      </section>
+
+      <main class="board" id="board" aria-live="polite"></main>
+      </div>
+    </div>
+
+    <div class="modal-backdrop" id="dialogBackdrop" hidden>
+      <section class="modal" id="deliverableDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" hidden>
+        <form id="deliverableForm">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Entregável</p>
+            <h2 id="dialogTitle">Novo entregável</h2>
+          </div>
+          <button class="icon-button" id="closeDialogButton" type="button" aria-label="Fechar">×</button>
+        </div>
+
+        <div class="form-grid">
+          <label class="field field-full">
+            <span>Nome</span>
+            <input id="titleInput" name="title" type="text" required />
+          </label>
+
+          <label class="field">
+            <span>Fase</span>
+            <select id="phaseInput" name="phaseId" required></select>
+          </label>
+
+          <label class="field">
+            <span>Pacote / Gate</span>
+            <input id="packageInput" name="packageName" type="text" list="packageOptions" required />
+            <datalist id="packageOptions"></datalist>
+          </label>
+
+          <label class="field">
+            <span>Status</span>
+            <select id="statusInput" name="status">
+              <option value="not-started">Não iniciado</option>
+              <option value="in-progress">Em andamento</option>
+              <option value="done">Concluído</option>
+              <option value="blocked">Bloqueado</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Prazo</span>
+            <input id="dueDateInput" name="dueDate" type="date" />
+          </label>
+
+          <label class="field field-full">
+            <span>Responsável</span>
+            <input id="ownerInput" name="owner" type="text" />
+          </label>
+
+          <label class="field field-full">
+            <span>Notas</span>
+            <textarea id="notesInput" name="notes" rows="4"></textarea>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button class="button button-danger" id="deleteButton" type="button">Excluir</button>
+          <div class="modal-actions-right">
+            <button class="button button-ghost" id="cancelButton" type="button">Cancelar</button>
+            <button class="button button-primary" type="submit">Salvar</button>
+          </div>
+        </div>
+        </form>
+      </section>
+    </div>
+
+    <script src="app-supabase.js"></script>
+  </body>
+</html>
