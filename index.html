@@ -11,7 +11,7 @@
       <header class="topbar">
         <div>
           <p class="eyebrow">Quality</p>
-          <h1>Controle de entregáveis</h1>
+          <h1>Controle de entregaveis</h1>
         </div>
         <div class="header-actions">
           <span class="sync-status" id="syncStatus">Desconectado</span>
@@ -19,7 +19,7 @@
           <button class="button button-ghost" id="exportButton" type="button">Exportar</button>
           <button class="button button-ghost" id="resetButton" type="button">Restaurar base</button>
           <button class="button button-ghost" id="signOutButton" type="button" hidden>Sair</button>
-          <button class="button button-primary" id="newDeliverableButton" type="button">Novo entregável</button>
+          <button class="button button-primary" id="newDeliverableButton" type="button">Novo entregavel</button>
         </div>
       </header>
 
@@ -51,13 +51,45 @@
       </section>
 
       <div id="appContent" hidden>
-      <section class="summary-grid" aria-label="Resumo dos entregáveis">
+      <section class="context-strip" id="contextStrip" hidden>
+        <button class="button button-ghost" id="backToProjectsButton" type="button">Projetos</button>
+        <button class="button button-ghost" id="backToGatesButton" type="button" hidden>Gates</button>
+        <div class="context-copy">
+          <span id="selectedProjectLabel">Nenhum projeto</span>
+          <strong id="selectedGateLabel">Escolha um projeto</strong>
+        </div>
+      </section>
+
+      <section class="selection-screen" id="projectScreen">
+        <div class="screen-heading">
+          <div>
+            <p class="eyebrow">Projetos</p>
+            <h2>Escolha o projeto</h2>
+          </div>
+          <button class="button button-primary" id="addProjectButton" type="button">Adicionar projeto</button>
+        </div>
+        <div class="selection-grid project-grid" id="projectGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="selection-screen" id="gateScreen" hidden>
+        <div class="screen-heading">
+          <div>
+            <p class="eyebrow" id="gateProjectEyebrow">Projeto</p>
+            <h2>Escolha o gate</h2>
+          </div>
+          <button class="button button-ghost" id="gateAddProjectButton" type="button">Novo projeto</button>
+        </div>
+        <div class="selection-grid gate-grid" id="gateGrid" aria-live="polite"></div>
+      </section>
+
+      <section id="deliverablesScreen" hidden>
+      <section class="summary-grid" aria-label="Resumo dos entregaveis">
         <article class="metric">
           <span class="metric-label">Total</span>
           <strong id="totalCount">0</strong>
         </article>
         <article class="metric">
-          <span class="metric-label">Concluídos</span>
+          <span class="metric-label">Concluidos</span>
           <strong id="doneCount">0</strong>
         </article>
         <article class="metric">
@@ -70,7 +102,7 @@
         </article>
         <article class="metric metric-wide">
           <div class="metric-row">
-            <span class="metric-label">Avanço geral</span>
+            <span class="metric-label">Avanco geral</span>
             <strong id="completionRate">0%</strong>
           </div>
           <div class="progress-track" aria-hidden="true">
@@ -82,18 +114,19 @@
       <section class="toolbar" aria-label="Filtros">
         <label class="search-field">
           <span>Buscar</span>
-          <input id="searchInput" type="search" placeholder="Nome, pacote, responsável..." />
+          <input id="searchInput" type="search" placeholder="Nome, pacote, responsavel..." />
         </label>
         <div class="segmented" id="statusFilters" role="group" aria-label="Status">
           <button class="segment active" type="button" data-status="all">Todos</button>
-          <button class="segment" type="button" data-status="not-started">Não iniciado</button>
+          <button class="segment" type="button" data-status="not-started">Nao iniciado</button>
           <button class="segment" type="button" data-status="in-progress">Em andamento</button>
-          <button class="segment" type="button" data-status="done">Concluído</button>
+          <button class="segment" type="button" data-status="done">Concluido</button>
           <button class="segment" type="button" data-status="blocked">Bloqueado</button>
         </div>
       </section>
 
       <main class="board" id="board" aria-live="polite"></main>
+      </section>
       </div>
     </div>
 
@@ -102,10 +135,10 @@
         <form id="deliverableForm">
         <div class="modal-header">
           <div>
-            <p class="eyebrow">Entregável</p>
-            <h2 id="dialogTitle">Novo entregável</h2>
+            <p class="eyebrow">Entregavel</p>
+            <h2 id="dialogTitle">Novo entregavel</h2>
           </div>
-          <button class="icon-button" id="closeDialogButton" type="button" aria-label="Fechar">×</button>
+          <button class="icon-button" id="closeDialogButton" type="button" aria-label="Fechar">x</button>
         </div>
 
         <div class="form-grid">
@@ -128,9 +161,9 @@
           <label class="field">
             <span>Status</span>
             <select id="statusInput" name="status">
-              <option value="not-started">Não iniciado</option>
+              <option value="not-started">Nao iniciado</option>
               <option value="in-progress">Em andamento</option>
-              <option value="done">Concluído</option>
+              <option value="done">Concluido</option>
               <option value="blocked">Bloqueado</option>
             </select>
           </label>
@@ -141,7 +174,7 @@
           </label>
 
           <label class="field field-full">
-            <span>Responsável</span>
+            <span>Responsavel</span>
             <input id="ownerInput" name="owner" type="text" />
           </label>
 
@@ -160,8 +193,30 @@
         </div>
         </form>
       </section>
+
+      <section class="modal" id="projectDialog" role="dialog" aria-modal="true" aria-labelledby="projectDialogTitle" hidden>
+        <form id="projectForm">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">Projeto</p>
+            <h2 id="projectDialogTitle">Adicionar projeto</h2>
+          </div>
+          <button class="icon-button" id="closeProjectDialogButton" type="button" aria-label="Fechar">x</button>
+        </div>
+
+        <label class="field field-full">
+          <span>Nome do projeto</span>
+          <input id="projectNameInput" name="projectName" type="text" placeholder="Ex: Plataforma Q3" required />
+        </label>
+
+        <div class="modal-actions modal-actions-right">
+          <button class="button button-ghost" id="cancelProjectButton" type="button">Cancelar</button>
+          <button class="button button-primary" type="submit">Criar projeto</button>
+        </div>
+        </form>
+      </section>
     </div>
 
-    <script src="app-supabase.js"></script>
+    <script src="app-flow.js"></script>
   </body>
 </html>
