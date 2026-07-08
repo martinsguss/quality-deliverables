@@ -1,19 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Manrope:wght@500;600;700;800&display=swap");
+
 :root {
-  --bg: #f5f7fb;
-  --surface: #ffffff;
-  --surface-muted: #f8fafc;
-  --text: #152033;
-  --muted: #667085;
-  --line: #d9e0ea;
-  --primary: #1459d9;
-  --primary-strong: #0f46ad;
-  --green: #168552;
-  --amber: #b76e00;
-  --red: #c03434;
+  --bg: #faf9f5;
+  --surface: #fffdf8;
+  --surface-muted: #f4f0e8;
+  --surface-strong: #ede4d7;
+  --text: #26221d;
+  --muted: #6f665d;
+  --line: #ded6ca;
+  --primary: #c15f3c;
+  --primary-strong: #9d482d;
+  --primary-soft: #f3dfd4;
+  --green: #4f7b5d;
+  --amber: #b56a1f;
+  --red: #aa3f36;
   --radius: 8px;
-  --shadow: 0 18px 45px rgba(21, 32, 51, 0.12);
+  --shadow: 0 18px 42px rgba(38, 34, 29, 0.1);
   font-family:
-    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
 * {
@@ -25,7 +29,8 @@ body {
   min-width: 320px;
   color: var(--text);
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(245, 247, 251, 0.96)),
+    radial-gradient(circle at top left, rgba(193, 95, 60, 0.12), transparent 31rem),
+    linear-gradient(180deg, rgba(250, 249, 245, 0.95), rgba(244, 243, 238, 0.98)),
     var(--bg);
 }
 
@@ -51,19 +56,19 @@ button {
 .app-shell {
   width: min(1440px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 28px 0 40px;
+  padding: 42px 0 48px;
 }
 
 .topbar {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 18px;
-  margin-bottom: 20px;
+  gap: 24px;
+  margin-bottom: 22px;
 }
 
 .eyebrow {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   color: var(--primary);
   font-size: 0.76rem;
   font-weight: 800;
@@ -80,20 +85,26 @@ p {
 
 h1 {
   margin-bottom: 0;
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  line-height: 0.98;
+  font-family: Lora, Georgia, "Times New Roman", serif;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-weight: 700;
+  line-height: 1.02;
   letter-spacing: 0;
 }
 
 h2 {
   margin-bottom: 0;
-  font-size: 1.35rem;
+  font-family: Lora, Georgia, "Times New Roman", serif;
+  font-size: 1.5rem;
+  font-weight: 650;
   letter-spacing: 0;
 }
 
 h3 {
   margin-bottom: 0;
-  font-size: 1rem;
+  font-family: Lora, Georgia, "Times New Roman", serif;
+  font-size: 1.08rem;
+  font-weight: 700;
   letter-spacing: 0;
 }
 
@@ -114,21 +125,21 @@ h3 {
   border-radius: 999px;
   padding: 0 10px;
   color: var(--muted);
-  background: var(--surface);
+  background: rgba(255, 253, 248, 0.78);
   font-size: 0.78rem;
   font-weight: 800;
 }
 
 .sync-status.is-online {
   color: var(--green);
-  border-color: rgba(22, 133, 82, 0.25);
-  background: #e8f7ef;
+  border-color: rgba(79, 123, 93, 0.28);
+  background: #e7efe3;
 }
 
 .sync-status.is-error {
   color: var(--red);
-  border-color: rgba(192, 52, 52, 0.24);
-  background: #fff0f0;
+  border-color: rgba(170, 63, 54, 0.24);
+  background: #f8e3dd;
 }
 
 .user-email {
@@ -158,7 +169,7 @@ h3 {
 }
 
 .button-primary {
-  color: #ffffff;
+  color: #fffaf4;
   background: var(--primary);
 }
 
@@ -168,17 +179,18 @@ h3 {
 
 .button-ghost {
   border-color: var(--line);
+  background: rgba(255, 253, 248, 0.72);
 }
 
 .button-ghost:hover {
-  border-color: #b9c4d4;
-  background: #f9fbff;
+  border-color: #c8b6a7;
+  background: #fffaf1;
 }
 
 .button-danger {
   color: var(--red);
-  border-color: rgba(192, 52, 52, 0.24);
-  background: #fff8f8;
+  border-color: rgba(170, 63, 54, 0.24);
+  background: #f8e3dd;
 }
 
 .button-danger[hidden] {
@@ -193,8 +205,9 @@ h3 {
   margin-bottom: 18px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 20px;
-  background: var(--surface);
+  padding: 24px;
+  background: rgba(255, 253, 248, 0.82);
+  box-shadow: var(--shadow);
 }
 
 .auth-panel p {
@@ -217,12 +230,12 @@ h3 {
 
 .button-github {
   grid-column: 1 / -1;
-  color: #ffffff;
-  background: #24292f;
+  color: #fffaf4;
+  background: #2b2722;
 }
 
 .button-github:hover {
-  background: #111827;
+  background: #17130f;
 }
 
 .password-control {
@@ -244,7 +257,7 @@ h3 {
 
 .password-toggle:hover {
   border-color: var(--primary);
-  background: #f2f6ff;
+  background: var(--primary-soft);
 }
 
 .form-message {
@@ -274,14 +287,17 @@ h3 {
   min-height: 96px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 16px;
-  background: var(--surface);
+  padding: 18px;
+  background: rgba(255, 253, 248, 0.82);
+  box-shadow: 0 10px 28px rgba(38, 34, 29, 0.06);
 }
 
 .metric strong {
   display: block;
-  margin-top: 8px;
-  font-size: 2rem;
+  margin-top: 10px;
+  font-family: Lora, Georgia, "Times New Roman", serif;
+  font-size: 2.35rem;
+  font-weight: 700;
   line-height: 1;
 }
 
@@ -307,7 +323,7 @@ h3 {
   margin-top: 18px;
   overflow: hidden;
   border-radius: 999px;
-  background: #e6ebf3;
+  background: var(--surface-strong);
 }
 
 .progress-track span {
@@ -315,7 +331,7 @@ h3 {
   width: 0;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, var(--primary), var(--green));
+  background: linear-gradient(90deg, var(--primary), var(--amber));
   transition: width 220ms ease;
 }
 
@@ -331,7 +347,7 @@ h3 {
   padding: 12px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(250, 249, 245, 0.86);
   backdrop-filter: blur(14px);
 }
 
@@ -360,7 +376,7 @@ textarea {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   color: var(--text);
-  background: var(--surface);
+  background: #fffdf8;
   outline: none;
   transition:
     border-color 160ms ease,
@@ -382,8 +398,8 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: rgba(20, 89, 217, 0.78);
-  box-shadow: 0 0 0 4px rgba(20, 89, 217, 0.12);
+  border-color: rgba(193, 95, 60, 0.82);
+  box-shadow: 0 0 0 4px rgba(193, 95, 60, 0.14);
 }
 
 .segmented {
@@ -404,12 +420,12 @@ textarea:focus {
 
 .segment:hover {
   color: var(--text);
-  background: #f1f5f9;
+  background: var(--primary-soft);
 }
 
 .segment.active {
-  color: #ffffff;
-  background: var(--text);
+  color: #fffaf4;
+  background: var(--primary);
 }
 
 .board {
@@ -423,7 +439,8 @@ textarea:focus {
   min-width: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: var(--surface);
+  background: rgba(255, 253, 248, 0.78);
+  box-shadow: 0 10px 28px rgba(38, 34, 29, 0.06);
 }
 
 .phase-header {
@@ -434,6 +451,7 @@ textarea:focus {
   min-height: 82px;
   padding: 15px;
   border-bottom: 1px solid var(--line);
+  background: rgba(244, 240, 232, 0.58);
 }
 
 .phase-header p {
@@ -448,7 +466,7 @@ textarea:focus {
   border-radius: 999px;
   padding: 5px 9px;
   color: var(--primary);
-  background: #eef4ff;
+  background: var(--primary-soft);
   font-size: 0.8rem;
   font-weight: 850;
   text-align: center;
@@ -498,11 +516,11 @@ textarea:focus {
   display: grid;
   gap: 9px;
   width: 100%;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #e4d9ca;
   border-radius: var(--radius);
   padding: 10px;
   color: var(--text);
-  background: var(--surface-muted);
+  background: #fbf7ef;
   text-align: left;
   transition:
     border-color 160ms ease,
@@ -511,15 +529,16 @@ textarea:focus {
 }
 
 .deliverable-card:hover {
-  border-color: #b9c4d4;
-  background: #ffffff;
+  border-color: #c8b6a7;
+  background: #fffaf1;
   transform: translateY(-1px);
 }
 
 .deliverable-title {
   min-height: 40px;
   overflow-wrap: anywhere;
-  font-weight: 780;
+  font-family: Lora, Georgia, "Times New Roman", serif;
+  font-weight: 700;
   line-height: 1.28;
 }
 
@@ -542,23 +561,23 @@ textarea:focus {
 }
 
 .status-not-started {
-  color: #475467;
-  background: #eef2f6;
+  color: #61574e;
+  background: #ece4d8;
 }
 
 .status-in-progress {
-  color: #0f46ad;
-  background: #e7f0ff;
+  color: #9d482d;
+  background: #f3dfd4;
 }
 
 .status-done {
   color: var(--green);
-  background: #e8f7ef;
+  background: #e7efe3;
 }
 
 .status-blocked {
   color: var(--red);
-  background: #ffebeb;
+  background: #f8e3dd;
 }
 
 .due {
@@ -588,11 +607,11 @@ textarea:focus {
 }
 
 .empty-state {
-  border: 1px dashed #c6d1df;
+  border: 1px dashed #c8b6a7;
   border-radius: var(--radius);
   padding: 14px;
   color: var(--muted);
-  background: #fbfcfe;
+  background: rgba(255, 253, 248, 0.6);
   font-size: 0.88rem;
   line-height: 1.45;
 }
@@ -603,16 +622,16 @@ textarea:focus {
   justify-content: center;
   width: 100%;
   min-height: 36px;
-  border: 1px dashed #b9c4d4;
+  border: 1px dashed #c8b6a7;
   border-radius: var(--radius);
   color: var(--primary);
-  background: #fbfcfe;
+  background: rgba(255, 253, 248, 0.64);
   font-weight: 800;
 }
 
 .inline-add:hover {
   border-color: var(--primary);
-  background: #f2f6ff;
+  background: var(--primary-soft);
 }
 
 .modal-backdrop {
@@ -622,7 +641,7 @@ textarea:focus {
   display: grid;
   place-items: center;
   padding: 14px;
-  background: rgba(21, 32, 51, 0.42);
+  background: rgba(38, 34, 29, 0.46);
   backdrop-filter: blur(3px);
 }
 
@@ -663,14 +682,14 @@ textarea:focus {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   color: var(--muted);
-  background: #ffffff;
+  background: #fffdf8;
   font-size: 1.45rem;
   line-height: 1;
 }
 
 .icon-button:hover {
   color: var(--text);
-  border-color: #b9c4d4;
+  border-color: #c8b6a7;
 }
 
 .form-grid {
